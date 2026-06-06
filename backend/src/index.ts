@@ -8,19 +8,36 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'HRMS API running' });
-});
+app.get('/api/health', (req, res) => res.json({ status: 'OK' }));
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI || '')
-  .then(() => {
+  .then(async () => {
     console.log('✅ MongoDB connected');
-    app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+    // Import routes AFTER express is fully ready
+    const { default: authRoutes }     = await import('./routes/auth');
+    const { default: employeeRoutes } = await import('./routes/employees');
+    const { default: attendanceRoutes } = await import('./routes/attendance');
+    const { default: payrollRoutes }     = await import('./routes/payroll');
+    const { default: performanceRoutes } = await import('./routes/performance');
+    const { default: recruitmentRoutes } = await import('./routes/recruitment');
+    const { default: uploadRoutes } = await import('./routes/upload');
+    
+    app.use('/api/auth', authRoutes);
+    app.use('/api/employees', employeeRoutes);
+    app.use('/api/attendance', attendanceRoutes);
+    app.use('/api/payroll',     payrollRoutes);
+    app.use('/api/performance', performanceRoutes);
+    app.use('/api/recruitment', recruitmentRoutes);
+    app.use('/api/upload', uploadRoutes);
+
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on port ${PORT}`);
+      console.log('✅ Routes registered: /api/auth, /api/employees, /api/attendance');
+   
+    });
   })
   .catch((err) => console.error('❌ MongoDB error:', err));
