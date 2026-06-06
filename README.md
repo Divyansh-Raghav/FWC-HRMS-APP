@@ -9,7 +9,7 @@
 | Service | URL |
 |---|---|
 | 🖥️ Frontend | _coming soon (Vercel)_ |
-| ⚙️ Backend API | _coming soon (Render)_ |
+| ⚙️ Backend API | https://fwc-hrms-app.onrender.com/|
 
 ---
 
