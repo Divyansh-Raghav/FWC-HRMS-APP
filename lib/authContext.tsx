@@ -6,7 +6,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'senior_manager' | 'hr_recruiter' | 'employee';
+  role: 'admin' | 'senior_manager' | 'hr_recruiter' | 'employee'| 'applicant';
   employeeId: string;
   department: string;
 }
