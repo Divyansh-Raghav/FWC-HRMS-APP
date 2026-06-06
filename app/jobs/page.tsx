@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/authContext';
 import Cookies from 'js-cookie';
 
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 export default function JobsPage() {
   const { user, logout }          = useAuth();
   const [jobs, setJobs]           = useState<any[]>([]);
@@ -28,7 +30,7 @@ export default function JobsPage() {
     setLoading(true);
     try {
       const token = Cookies.get('token');
-      const res   = await fetch('http://localhost:5000/api/recruitment', {
+      const res   = await fetch(`${API}/recruitment`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -50,7 +52,7 @@ export default function JobsPage() {
       const formData = new FormData();
       formData.append('resume', file);
 
-      const res  = await fetch('http://localhost:5000/api/upload/pdf', {
+      const res  = await fetch(`${API}/upload/pdf`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -95,7 +97,7 @@ export default function JobsPage() {
     }
     try {
       const token = Cookies.get('token');
-      const res   = await fetch(`http://localhost:5000/api/recruitment/${selectedJob._id}/apply`, {
+      const res   = await fetch(`${API}/recruitment/${selectedJob._id}/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ ...form, aiScore: aiResult?.score, aiSummary: aiResult?.summary }),
@@ -116,7 +118,6 @@ export default function JobsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center">🏢</div>
@@ -191,7 +192,6 @@ export default function JobsPage() {
         )}
       </div>
 
-      {/* Apply Modal */}
       {showModal && selectedJob && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
