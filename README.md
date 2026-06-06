@@ -293,7 +293,7 @@ POST   /api/upload/pdf
 
 ## 👨‍💻 Author
 
-**Raghav & Divyansh**
+**Divyansh Raghav**
 FWC IT Services Hackathon 2026
 
 ---
