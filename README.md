@@ -8,7 +8,7 @@
 
 | Service | URL |
 |---|---|
-| 🖥️ Frontend | https://fwc-hrms-app-2dyy.vercel.app/login |
+| 🖥️ Frontend | https://fwc-hrms-app-xo39.vercel.app/login |
 | ⚙️ Backend API | https://fwc-hrms-app.onrender.com/|
 
 ---
